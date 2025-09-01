@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <parameter name="browser" value="edge"></parameter>
+
+    <test verbose="2" preserve-order="true" name="Test">
+        <classes>
+            <class name="tests.LoginTest">
+                <methods>
+                    <include name="LoginWithInvalidPhoneNumber"/>
+                    <include name="LoginWithValidPhoneNumber"/>
+                    <include name="VerifyLoginUIElements"/>
+                </methods>
+            </class>
+            <class name="tests.ProductBrowsingTest">
+                <methods>
+                    <include name="SearchProduct"/>
+                    <include name="SearchWithoutAnyText"/>
+                    <include name="ApplyFilter"/>
+                    <include name="SortProduct"/>
+                    <include name="VerifyProductDetails"/>
+                </methods>
+            </class>
+            <class name="tests.CartAndOrderTest">
+                <methods>
+                    <include name="AddProductToCart"/>
+                    <include name="VerifyProductPriceByChangingQTY"/>
+                    <include name="RemoveProductFromCart"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
