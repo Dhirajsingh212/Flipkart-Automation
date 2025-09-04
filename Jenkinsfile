@@ -35,25 +35,36 @@ pipeline {
         stage('Report') {
             steps {
                 script {
-                    // Check if test results exist before trying to publish
-                    if (fileExists('**/target/surefire-reports/*.xml')) {
+                    // Check if TestNG results exist (your tests are using TestNG)
+                    if (fileExists('**/target/surefire-reports/testng-results.xml')) {
+                        echo "Found TestNG results, publishing test report"
+                        publishTestResults testResultsPattern: '**/target/surefire-reports/testng-results.xml'
+                    } else if (fileExists('**/target/surefire-reports/*.xml')) {
+                        echo "Found JUnit XML results, publishing test report"
                         junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
                     } else {
-                        echo "No JUnit test results found"
+                        echo "No test results found in surefire-reports directory"
+                        // List files to help debug
+                        if (isUnix()) {
+                            sh 'find target -name "*.xml" -type f || echo "No XML files found"'
+                        } else {
+                            bat 'dir target\\surefire-reports\\ /s || echo "Directory not found or empty"'
+                        }
                     }
 
                     // Check if HTML report exists before publishing
                     if (fileExists('target/ExtentReport.html')) {
-                        publishHTML([
-                            allowMissing: false,
-                            alwaysLinkToLastBuild: true,
-                            keepAll: true,
-                            reportDir: 'target',
-                            reportFiles: 'ExtentReport.html',
-                            reportName: 'Extent Report'
-                        ])
+                        echo "Found ExtentReport.html, archiving as artifact"
+                        archiveArtifacts artifacts: 'target/ExtentReport.html', fingerprint: true
+                        echo "ExtentReport.html archived as build artifact"
                     } else {
                         echo "ExtentReport.html not found in target directory"
+                        // List target directory contents to help debug
+                        if (isUnix()) {
+                            sh 'ls -la target/ || echo "Target directory not found"'
+                        } else {
+                            bat 'dir target\\ || echo "Target directory not found"'
+                        }
                     }
                 }
             }
