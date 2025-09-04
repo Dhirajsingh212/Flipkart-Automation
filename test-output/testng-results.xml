@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="11" passed="11" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2025-09-04T11:08:49 IST" name="All Test Suite" finished-at="2025-09-04T11:09:34 IST" duration-ms="44728">
+    <groups>
+    </groups>
+    <test started-at="2025-09-04T11:08:49 IST" name="Test" finished-at="2025-09-04T11:09:34 IST" duration-ms="44728">
+      <class name="tests.LoginTest">
+        <test-method is-config="true" signature="CreateBrowserInstance(java.lang.String)[pri:0, instance:tests.LoginTest@544fa968]" started-at="2025-09-04T11:08:42 IST" name="CreateBrowserInstance" finished-at="2025-09-04T11:08:49 IST" duration-ms="7217" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[edge]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- CreateBrowserInstance -->
+        <test-method is-config="true" signature="InitializeObjects()[pri:0, instance:tests.LoginTest@544fa968]" started-at="2025-09-04T11:08:49 IST" name="InitializeObjects" finished-at="2025-09-04T11:08:49 IST" duration-ms="2" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- InitializeObjects -->
+        <test-method signature="VerifyLoginUIElements()[pri:0, instance:tests.LoginTest@544fa968]" started-at="2025-09-04T11:08:49 IST" name="VerifyLoginUIElements" finished-at="2025-09-04T11:08:52 IST" duration-ms="2184" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- VerifyLoginUIElements -->
+        <test-method signature="LoginWithInvalidPhoneNumber()[pri:0, instance:tests.LoginTest@544fa968]" started-at="2025-09-04T11:08:52 IST" name="LoginWithInvalidPhoneNumber" finished-at="2025-09-04T11:08:52 IST" depends-on-methods="tests.LoginTest.VerifyLoginUIElements" duration-ms="419" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LoginWithInvalidPhoneNumber -->
+        <test-method signature="LoginWithValidPhoneNumber()[pri:0, instance:tests.LoginTest@544fa968]" started-at="2025-09-04T11:08:52 IST" name="LoginWithValidPhoneNumber" finished-at="2025-09-04T11:08:53 IST" depends-on-methods="tests.LoginTest.VerifyLoginUIElements" duration-ms="654" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- LoginWithValidPhoneNumber -->
+        <test-method is-config="true" signature="CloseBrowserInstance()[pri:0, instance:tests.LoginTest@544fa968]" started-at="2025-09-04T11:09:34 IST" name="CloseBrowserInstance" finished-at="2025-09-04T11:09:35 IST" duration-ms="972" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- CloseBrowserInstance -->
+      </class> <!-- tests.LoginTest -->
+      <class name="tests.CartAndOrderTest">
+        <test-method is-config="true" signature="IntializeObjects()[pri:0, instance:tests.CartAndOrderTest@77f1baf5]" started-at="2025-09-04T11:08:49 IST" name="IntializeObjects" finished-at="2025-09-04T11:08:49 IST" duration-ms="415" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- IntializeObjects -->
+        <test-method signature="AddProductToCart()[pri:0, instance:tests.CartAndOrderTest@77f1baf5]" started-at="2025-09-04T11:09:22 IST" name="AddProductToCart" finished-at="2025-09-04T11:09:22 IST" duration-ms="186" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- AddProductToCart -->
+        <test-method signature="VerifyProductPriceByChangingQTY()[pri:0, instance:tests.CartAndOrderTest@77f1baf5]" started-at="2025-09-04T11:09:22 IST" name="VerifyProductPriceByChangingQTY" finished-at="2025-09-04T11:09:33 IST" depends-on-methods="tests.CartAndOrderTest.AddProductToCart" duration-ms="10747" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- VerifyProductPriceByChangingQTY -->
+        <test-method signature="RemoveProductFromCart()[pri:0, instance:tests.CartAndOrderTest@77f1baf5]" started-at="2025-09-04T11:09:33 IST" name="RemoveProductFromCart" finished-at="2025-09-04T11:09:34 IST" depends-on-methods="tests.CartAndOrderTest.VerifyProductPriceByChangingQTY" duration-ms="478" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- RemoveProductFromCart -->
+      </class> <!-- tests.CartAndOrderTest -->
+      <class name="tests.ProductBrowsingTest">
+        <test-method is-config="true" signature="InitializeObjects()[pri:0, instance:tests.ProductBrowsingTest@7d20d0b]" started-at="2025-09-04T11:08:49 IST" name="InitializeObjects" finished-at="2025-09-04T11:08:49 IST" duration-ms="5" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- InitializeObjects -->
+        <test-method signature="SearchWithoutAnyText()[pri:-1, instance:tests.ProductBrowsingTest@7d20d0b]" started-at="2025-09-04T11:08:53 IST" name="SearchWithoutAnyText" finished-at="2025-09-04T11:08:56 IST" duration-ms="2922" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- SearchWithoutAnyText -->
+        <test-method signature="SearchProduct()[pri:0, instance:tests.ProductBrowsingTest@7d20d0b]" started-at="2025-09-04T11:08:56 IST" name="SearchProduct" finished-at="2025-09-04T11:08:58 IST" duration-ms="2525" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- SearchProduct -->
+        <test-method signature="ApplyFilter()[pri:0, instance:tests.ProductBrowsingTest@7d20d0b]" started-at="2025-09-04T11:08:58 IST" name="ApplyFilter" finished-at="2025-09-04T11:09:19 IST" depends-on-methods="tests.ProductBrowsingTest.SearchProduct" duration-ms="21028" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- ApplyFilter -->
+        <test-method signature="SortProduct()[pri:0, instance:tests.ProductBrowsingTest@7d20d0b]" started-at="2025-09-04T11:09:19 IST" name="SortProduct" finished-at="2025-09-04T11:09:19 IST" depends-on-methods="tests.ProductBrowsingTest.ApplyFilter" duration-ms="83" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- SortProduct -->
+        <test-method signature="VerifyProductDetails()[pri:0, instance:tests.ProductBrowsingTest@7d20d0b]" started-at="2025-09-04T11:09:19 IST" name="VerifyProductDetails" finished-at="2025-09-04T11:09:22 IST" depends-on-methods="tests.ProductBrowsingTest.SortProduct" duration-ms="2971" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- VerifyProductDetails -->
+      </class> <!-- tests.ProductBrowsingTest -->
+    </test> <!-- Test -->
+  </suite> <!-- All Test Suite -->
+</testng-results>

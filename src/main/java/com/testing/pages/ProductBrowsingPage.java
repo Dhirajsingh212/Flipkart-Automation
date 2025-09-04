@@ -28,7 +28,7 @@ public class ProductBrowsingPage {
     WebElement ramFilter;
 
     //1-6
-    @FindBy(xpath = "(//div[@class='ewzVkT _3DvUAf'])[3]/div/label")
+    @FindBy(xpath = "(//div[@class='ewzVkT _3DvUAf'])[4]/div/label")
     WebElement brandFilter;
 
     @FindBy(xpath = "(//select[@class='Gn+jFg'])[1]")
