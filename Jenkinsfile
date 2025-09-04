@@ -1,69 +1,45 @@
 pipeline {
-
-    agent {
-
-        docker {
-
-            image 'maven:3.9.6-eclipse-temurin-17'
-
-        }
-
-    }
+    agent any
 
     stages {
-
         stage('Checkout') {
-
             steps {
-
-            	echo "Code started in docker"
-
-                // Pull code from Git
-
+                echo "Starting build process"
                 checkout scm
-
             }
-
         }
 
-        stage('Build & Test') {
-
+        stage('Build & Test with Docker') {
             steps {
-
-                // Run Maven build & tests inside container
-
-                sh 'mvn clean test'
-
-                echo "Code executed in docker"
-
+                script {
+                    // Use Docker container for Maven build
+                    docker.image('maven:3.9.6-eclipse-temurin-17').inside('-v /var/run/docker.sock:/var/run/docker.sock') {
+                        sh 'mvn clean test'
+                        echo "Code executed in docker container"
+                    }
+                }
             }
-
         }
 
         stage('Report') {
-
             steps {
+                junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
 
-                // Archive test results & HTML reports
-
-                junit '**/target/surefire-reports/*.xml'
-
-                publishHTML([allowMissing: false,
-
+                publishHTML([
+                    allowMissing: false,
                     alwaysLinkToLastBuild: true,
-
                     keepAll: true,
-
                     reportDir: 'target',
-
                     reportFiles: 'ExtentReport.html',
-
-                    reportName: 'Extent Report'])
-
+                    reportName: 'Extent Report'
+                ])
             }
-
         }
-
     }
 
+    post {
+        always {
+            cleanWs()
+        }
+    }
 }
