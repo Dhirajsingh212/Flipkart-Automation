@@ -9,13 +9,18 @@ pipeline {
             }
         }
 
-        stage('Build & Test with Docker') {
+        stage('Build & Test') {
             steps {
                 script {
-                    // Use Docker container for Maven build
-                    docker.image('maven:3.9.6-eclipse-temurin-17').inside('-v /var/run/docker.sock:/var/run/docker.sock') {
+                    // Check if Maven is available on the system
+                    try {
+                        sh 'mvn --version'
                         sh 'mvn clean test'
-                        echo "Code executed in docker container"
+                        echo "Build and tests completed successfully"
+                    } catch (Exception e) {
+                        echo "Maven not found or build failed. Error: ${e.getMessage()}"
+                        currentBuild.result = 'FAILURE'
+                        error("Build failed")
                     }
                 }
             }
@@ -23,16 +28,28 @@ pipeline {
 
         stage('Report') {
             steps {
-                junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
+                script {
+                    // Check if test results exist before trying to publish
+                    if (fileExists('**/target/surefire-reports/*.xml')) {
+                        junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
+                    } else {
+                        echo "No JUnit test results found"
+                    }
 
-                publishHTML([
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: true,
-                    keepAll: true,
-                    reportDir: 'target',
-                    reportFiles: 'ExtentReport.html',
-                    reportName: 'Extent Report'
-                ])
+                    // Check if HTML report exists before publishing
+                    if (fileExists('target/ExtentReport.html')) {
+                        publishHTML([
+                            allowMissing: false,
+                            alwaysLinkToLastBuild: true,
+                            keepAll: true,
+                            reportDir: 'target',
+                            reportFiles: 'ExtentReport.html',
+                            reportName: 'Extent Report'
+                        ])
+                    } else {
+                        echo "ExtentReport.html not found in target directory"
+                    }
+                }
             }
         }
     }
@@ -40,6 +57,12 @@ pipeline {
     post {
         always {
             cleanWs()
+        }
+        success {
+            echo "Pipeline completed successfully!"
+        }
+        failure {
+            echo "Pipeline failed. Please check the logs and ensure Maven is installed."
         }
     }
 }
