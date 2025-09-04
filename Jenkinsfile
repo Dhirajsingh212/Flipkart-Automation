@@ -14,8 +14,14 @@ pipeline {
                 script {
                     // Check if Maven is available on the system
                     try {
-                        sh 'mvn --version'
-                        sh 'mvn clean test'
+                        // Use bat instead of sh for Windows
+                        if (isUnix()) {
+                            sh 'mvn --version'
+                            sh 'mvn clean test'
+                        } else {
+                            bat 'mvn --version'
+                            bat 'mvn clean test'
+                        }
                         echo "Build and tests completed successfully"
                     } catch (Exception e) {
                         echo "Maven not found or build failed. Error: ${e.getMessage()}"
