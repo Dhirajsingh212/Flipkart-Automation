@@ -1,40 +1,35 @@
 pipeline {
-    agent any
-
-    stages {
-        stage('Build & Test') {
-            steps {
-                echo "Starting Maven build and test"
-                script {
-                    if (isUnix()) {
-                        sh 'mvn clean test'
-                    } else {
-                        bat 'mvn clean test'
-                    }
-                }
-            }
-        }
-
-        stage('Archive Reports') {
-            steps {
-                script {
-                    // Archive any test reports found
-                    if (fileExists('**/target/surefire-reports/*.xml')) {
-                        junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
-                    }
-
-                    // Archive HTML report if exists
-                    if (fileExists('target/ExtentReport.html')) {
-                        archiveArtifacts artifacts: 'target/ExtentReport.html'
-                    }
-                }
-            }
+    agent {
+        docker {
+            image 'maven:3.9.6-eclipse-temurin-17'
         }
     }
-
-    post {
-        always {
-            cleanWs()
+    stages {
+        stage('Checkout') {
+            steps {
+            	echo "Code started in docker"
+                // Pull code from Git
+                checkout scm
+            }
+        }
+        stage('Build & Test') {
+            steps {
+                // Run Maven build & tests inside container
+                sh 'mvn clean test'
+                echo "Code executed in docker"
+            }
+        }
+        stage('Report') {
+            steps {
+                // Archive test results & HTML reports
+                junit '**/target/surefire-reports/*.xml'
+                publishHTML([allowMissing: false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: 'target',
+                    reportFiles: 'ExtentReport.html',
+                    reportName: 'Extent Report'])
+            }
         }
     }
 }
